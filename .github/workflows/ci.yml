@@ -8,7 +8,7 @@ on:
 
 jobs:
   cocotb-verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
@@ -17,15 +17,23 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Verilator v5.036 (pre-built)
-        uses: living-systems/verilator-install@main
-        with:
-          version: 'v5.036'
-
-      - name: Verify Verilator version
+      - name: Install build dependencies
         run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            g++ make autoconf flex bison help2man \
+            libfl-dev python3-dev
+
+      - name: Build Verilator v5.036 (matching local)
+        run: |
+          git clone https://github.com/verilator/verilator.git
+          cd verilator
+          git checkout v5.036
+          autoconf
+          ./configure
+          make -j2
+          sudo make install
           verilator --version
-          # باید نشان دهد: Verilator 5.036 2025-04-27
 
       - name: Install Python dependencies
         run: |
