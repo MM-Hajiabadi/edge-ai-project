@@ -1,0 +1,7 @@
+venv/
+sim_build/
+data/
+models/*.pth
+results.xml
+__pycache__/
+*.pyc

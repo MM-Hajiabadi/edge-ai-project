@@ -1,0 +1,46 @@
+name: RTL Verification CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  cocotb-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ make flex bison autoconf help2man
+
+      - name: Build Verilator 5.036 from source
+        run: |
+          git clone https://github.com/verilator/verilator.git
+          cd verilator
+          git checkout v5.036
+          autoconf
+          ./configure
+          make -j2
+          sudo make install
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install cocotb pytest numpy scikit-learn librosa torch==1.13.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Generate test vectors (16 filters)
+        run: |
+          python generate_16f_vectors.py
+
+      - name: Run Cocotb RTL Verification
+        run: |
+          make
