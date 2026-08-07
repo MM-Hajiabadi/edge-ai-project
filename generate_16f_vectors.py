@@ -4,7 +4,7 @@ import torch
 from quant_inference import (load_weights, load_activation_ranges,
                               build_quantized_model, QMIN, QMAX)
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), "data", "processed")
+DATA_DIR = os.path.join(os.path.dirname(__file__), "artifacts", "data_transformation", "processed")
 
 def main():
     print("تولید بردار 16 فیلتر از یک پچ واقعی...")

@@ -5,10 +5,14 @@ import torch
 import torch.nn.functional as F
 from sklearn.metrics import roc_auc_score
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), "data", "processed")
-MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
+ARTIFACTS_DIR = os.path.join(os.path.dirname(__file__), "artifacts", "quantization")
+DATA_DIR = os.path.join(os.path.dirname(__file__), "artifacts", "data_transformation", "processed")
 
 QMIN, QMAX = -128, 127 
+
+def load_weights():
+    with open(os.path.join(ARTIFACTS_DIR, "golden_weights.json")) as f:
+        return json.load(f)
 
 
 def compute_scale_zp(t_min, t_max):
@@ -21,13 +25,8 @@ def compute_scale_zp(t_min, t_max):
     return scale, zp
 
 
-def load_weights():
-    with open(os.path.join(MODEL_DIR, "golden_weights.json")) as f:
-        return json.load(f)
-
-
 def load_activation_ranges():
-    with open(os.path.join(MODEL_DIR, "activation_ranges.json")) as f:
+    with open(os.path.join(ARTIFACTS_DIR, "activation_ranges.json")) as f:
         return json.load(f)
 
 
