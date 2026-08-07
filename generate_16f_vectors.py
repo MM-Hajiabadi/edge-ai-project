@@ -1,7 +1,3 @@
-"""
-تولید یک بردار واحد با همه 16 فیلتر برای یک پچ واقعی
-خروجی: test_vectors_16f.json — pixel + 16×9 وزن + 16 expected
-"""
 import os, json
 import numpy as np
 import torch
@@ -17,10 +13,8 @@ def main():
     layers = build_quantized_model(weights, ranges)
     enc1 = layers["enc1"]
 
-    # همه 16 فیلتر zero-shifted: [16,1,3,3] → [16,3,3]
     wz = enc1.w_int.numpy().astype(np.int64)[:, 0] - enc1.zp_w
 
-    # داده واقعی، پچ موقعیت (1,1)
     src_n = np.load(os.path.join(DATA_DIR, "src_test_normal.npy"))
     src_n = (src_n - src_n.min()) / (src_n.max() - src_n.min() + 1e-8)
     sample = torch.from_numpy(src_n[0].astype(np.float32))
@@ -47,7 +41,6 @@ def main():
         json.dump(vectors, fp)
     print(f"✅ test_vectors_16f.json — 1 پچ × 16 فیلتر")
 
-    # چاپ چند مقدار برای مشاهده
     print(f"  پچ: {patch[:5]}...")
     print(f"  فیلتر 0: expected={vectors['filters'][0]['expected']}")
     print(f"  فیلتر 15: expected={vectors['filters'][15]['expected']}")

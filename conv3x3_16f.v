@@ -1,8 +1,7 @@
-// conv3x3_16f.v — 16 فیلتر کانولوشن 3x3 موازی (ENC1)
-// تولید خودکار — برای تست با Cocotb
+
 module conv3x3_16f (
     input clk, input rst, input valid,
-    // پیکسل‌های ورودی (مشترک بین همه فیلترها)
+
     input signed [9:0] px00, px01, px02,
     input signed [9:0] px10, px11, px12,
     input signed [9:0] px20, px21, px22,

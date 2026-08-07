@@ -1,0 +1,31 @@
+# ============================================
+# Parameters
+# ============================================
+feature_extraction:
+  sample_rate: 16000
+  n_fft: 512
+  hop_length: 128
+  n_mels: 32
+  max_frames: 256
+
+model:
+  enc_channels: [16, 32, 64]
+  kernel_size: 3
+  stride: 2
+
+training:
+  batch_size: 32
+  epochs: 10
+  learning_rate: 0.001
+  patience: 10
+  val_split: 0.1
+  seed: 42
+  noise_augmentation: 0.01
+
+evaluation:
+  auc_threshold: 0.80
+
+quantization:
+  bits: 8
+  calibration_samples: 100
+  percentile: 99.9

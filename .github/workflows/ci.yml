@@ -38,8 +38,18 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install --upgrade pip
-          pip install cocotb pytest numpy
+          pip install cocotb pytest numpy scikit-learn pyyaml torch torchvision
+
+      - name: Generate test vectors (16 filters)
+        run: |
+          python generate_16f_vectors.py    
 
       - name: Run Cocotb RTL Verification
         run: |
           make
+          
+      - name: Run pytest
+        run: |
+          pip install pytest
+          python -m pytest tests/ -v
+  

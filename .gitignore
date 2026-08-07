@@ -1,7 +1,26 @@
-venv/
-sim_build/
-data/
-models/*.pth
-results.xml
+# Python
 __pycache__/
 *.pyc
+*.pyo
+venv/
+build/
+*.egg-info/
+
+# Data
+data/
+artifacts/
+models/
+
+# Cocotb / Verilator
+sim_build/
+results.xml
+*.vcd
+*.fst
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/

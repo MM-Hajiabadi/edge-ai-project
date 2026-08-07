@@ -1,0 +1,12 @@
+features:
+  n_mels: 32
+  n_frames: 256
+  dtype: float32
+  value_range: [0.0, 1.0]
+
+splits:
+  train_normal:     { min_files: 2000 }
+  src_test_normal:  { min_files: 100 }
+  src_test_anomaly: { min_files: 100 }
+  tgt_test_normal:  { min_files: 100 }
+  tgt_test_anomaly: { min_files: 100 }
